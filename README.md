@@ -1,37 +1,30 @@
-# NetScope v1.0 📡
+# ADB Toolbox 🔧
 
-**A comprehensive Android network analysis and scanning application built with Jetpack Compose and Material 3.**
+**A comprehensive Android Debug Bridge (ADB) management application built with Jetpack Compose and Material 3.**
 
 ## 🚀 Overview
 
-NetScope is a powerful network analysis tool for Android that provides comprehensive network discovery, port scanning, Wi-Fi analysis, and diagnostic utilities. Built with modern Android development practices using Jetpack Compose, MVVM architecture, and Material 3 design system.
+ADB Toolbox is a powerful Android application that provides a user-friendly interface for managing ADB connections, monitoring device logs, and performing various ADB operations. Built with modern Android development practices using Jetpack Compose, MVVM architecture, Hilt dependency injection, and Material 3 design system.
 
 ## ✨ Features
 
-### 🔍 Network Discovery
-- **Device Scanning**: Discover all devices on your local network
-- **Device Information**: View IP addresses, MAC addresses, hostnames, and device types
-- **Real-time Status**: Live scanning with progress indicators and device status
-- **Device Classification**: Automatic identification of routers, computers, mobile devices, printers, and IoT devices
+### 🔌 Device Management
+- **Wireless ADB Connection**: Connect to devices over Wi-Fi using IP address and port
+- **Device Discovery**: Automatic detection and listing of connected ADB devices
+- **Connection Status**: Real-time monitoring of device connection states
+- **Device Information**: Detailed device specs including Android version, API level, model, and manufacturer
 
-### 🔧 Port Analysis Tools
-- **TCP/UDP Port Scanner**: Scan custom port ranges on target devices
-- **Service Identification**: Automatic detection of common services (SSH, HTTP, HTTPS, etc.)
-- **Real-time Progress**: Live scanning progress with port-by-port updates
-- **Detailed Results**: Port status, response times, and service banners
+### 📱 Device Operations
+- **APK Management**: Install and manage APK files on connected devices
+- **App Management**: View and manage installed applications
+- **ADB Shell**: Execute shell commands directly on connected devices
+- **Device Info**: Comprehensive device information and specifications
 
-### 📶 Wi-Fi Analysis Dashboard
-- **Current Connection**: Detailed information about your connected network
-- **Signal Monitoring**: Real-time signal strength and quality metrics
-- **Network Discovery**: Scan and analyze all available Wi-Fi networks
-- **Security Analysis**: Display security protocols and encryption methods
-- **Channel Analysis**: Frequency and channel information for interference detection
-
-### 📊 Reports & Export
-- **Scan History**: Complete history of all network scans with timestamps
-- **Export Options**: Export results in JSON and PDF formats
-- **Share Functionality**: Share scan results via email, messaging, or cloud storage
-- **Filtering**: Filter scan history by type, date, and results
+### 📊 Logcat Monitoring
+- **Real-time Logs**: Stream live logcat output from connected devices
+- **Log Filtering**: Filter logs by level (Verbose, Debug, Info, Warn, Error, Fatal)
+- **Log History**: View historical log entries with timestamps
+- **Multiple Formats**: Support for different logcat output formats
 
 ## 🏗️ Architecture
 
@@ -40,138 +33,164 @@ NetScope is a powerful network analysis tool for Android that provides comprehen
 - **UI Framework**: Jetpack Compose
 - **Design System**: Material 3
 - **Architecture**: MVVM (Model-View-ViewModel)
+- **Dependency Injection**: Hilt
 - **Navigation**: Navigation Compose
 - **State Management**: StateFlow & Compose State
-- **Minimum SDK**: Android 8.0 (API 26)
+- **Coroutines**: For asynchronous operations
+- **Minimum SDK**: Android 7.0 (API 24)
 - **Target SDK**: Android 14 (API 34)
-
-### Project Structure
-```
-app/src/main/java/com/app/netscope/
-├── data/
-│   └── model/              # Data models and entities
-├── presentation/
-│   ├── navigation/         # Navigation setup
-│   ├── scanner/           # Network discovery screens
-│   ├── tools/             # Port scanning tools
-│   ├── wifi/              # Wi-Fi analysis screens
-│   └── reports/           # Reports and export screens
-└── ui/
-    └── theme/             # Material 3 theming
-```
 
 ## 🛠️ Setup & Installation
 
 ### Prerequisites
 - Android Studio Hedgehog or later
-- Android SDK 26+
+- Android SDK 24+
 - Kotlin 1.9+
+- ADB is installed and accessible in the system PATH
 
 ### Build Instructions
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd NetScope
+   cd AdbToolbox
    ```
 
-2. **Build the project**
+2. **Open in Android Studio**
+   - Import the project
+   - Sync Gradle files
+   - Ensure ADB is properly configured
+
+3. **Build the project**
    ```bash
    ./gradlew assembleDebug
    ```
 
-3. **Install on device**
+4. **Install on device**
    ```bash
    ./gradlew installDebug
    ```
 
-4. **Run from Android Studio**
-   - Open the project in Android Studio
-   - Click the "Run" button or press Shift+F10
-
 ## 📱 Usage Guide
 
-### Network Scanner
-1. Open the **Scanner** tab from the bottom navigation
-2. Tap the **Play** button to start network discovery
-3. View discovered devices with their details
-4. Tap on any device card for more information
+### Connecting to Devices
+1. **Enable Developer Options** on target device
+2. **Enable USB Debugging** and **Wireless ADB** (Android 11+)
+3. In ADB Toolbox, tap **"Connect Device"**
+4. Enter device IP address and port (default: 5555)
+5. Tap **"Connect"** to establish connection
 
-### Port Scanner
-1. Navigate to the **Tools** tab
-2. Enter the target IP address
-3. Set the port range (start and end ports)
-4. Tap **Scan** to begin port analysis
-5. View results showing open ports and services
+### Managing Connected Devices
+- View all connected devices in the main screen
+- Tap on a device to view detailed information
+- Use **"Disconnect"** to remove device connection
+- **"Refresh"** to update the device list and information
 
-### Wi-Fi Analysis
-1. Go to the **Wi-Fi Info** tab
-2. View your current connection details
-3. Tap **Refresh** to scan for available networks
-4. Analyze signal strengths and security protocols
+### Logcat Monitoring
+1. Select a connected device
+2. Navigate to **"Logcat Viewer"**
+3. Choose log level filters
+4. Start/stop log streaming
+5. View real-time logs with timestamps and tags
 
-### Reports & Export
-1. Access the **Reports** tab
-2. View your scan history
-3. Use **Export** buttons to save results as JSON or PDF
-4. Tap **Share** on any scan to share results
+### APK and App Management
+- **APK Manager**: Install APK files to connected devices
+- **App Manager**: View and manage installed applications
+- **Device Info**: Access comprehensive device specifications
 
-## 🔒 Permissions
+## 🔧 Core Components
 
-NetScope requires the following permissions:
+### AdbService
+The central service handles all ADB operations:
 
-- `INTERNET` - For network operations
-- `ACCESS_NETWORK_STATE` - To check network connectivity
-- `ACCESS_WIFI_STATE` - For Wi-Fi information
-- `CHANGE_WIFI_STATE` - For Wi-Fi scanning
-- `ACCESS_FINE_LOCATION` - Required for Wi-Fi scanning on Android 6+
-- `WAKE_LOCK` - For background scanning operations
+
 
 ## 🎨 UI Components
 
 ### Key Screens
-- **MainActivity**: Main navigation hub with bottom navigation
-- **ScannerScreen**: Network discovery interface with device list
-- **ToolsScreen**: Port scanning tools with input controls
-- **WifiScreen**: Wi-Fi analysis dashboard
-- **ReportsScreen**: Scan history and export functionality
+- **HomeScreen**: Main dashboard with device list and navigation
+- **LogcatScreen**: Real-time log monitoring interface
+- **ApkManagerScreen**: APK installation and management
+- **AppManagerScreen**: Installed app management
+- **ShellScreen**: ADB shell command interface
+- **DeviceInfoScreen**: Detailed device information
 
 ### Design Features
-- **Material 3 Design**: Modern, accessible interface
-- **Dark/Light Theme**: Automatic theme switching
-- **Responsive Layout**: Optimized for different screen sizes
-- **Progress Indicators**: Real-time feedback for long operations
-- **Status Badges**: Color-coded information display
+- **Material 3 Design**: Modern, accessible interface with dynamic theming
+- **Dark/Light Theme**: Automatic theme switching based on system preferences
+- **Responsive Layout**: Optimised for different screen sizes and orientations
+- **Real-time Updates**: Live data streaming with proper state management
+- **Error Handling**: Comprehensive error states and user feedback
+
+## 🔒 Permissions
+
+ADB Toolbox requires minimal permissions:
+
+- `INTERNET` - For network-based ADB connections
+- `ACCESS_NETWORK_STATE` - To check network connectivity status
+
+## 🧪 Testing
+
+### Running Tests
+```bash
+# Unit tests
+./gradlew test
+
+# Instrumented tests
+./gradlew connectedAndroidTest
+```
+
+### Test Structure
+- **Unit Tests**: Business logic and service testing
+- **Integration Tests**: ADB service integration testing
+- **UI Tests**: Compose UI testing with test rules
 
 ## 🔮 Future Enhancements
 
 ### Planned Features
-- **Real Network Implementation**: Replace mock data with actual network scanning
-- **Background Services**: Long-running scans with notifications
-- **Hilt Dependency Injection**: Proper DI setup for scalability
-- **Database Integration**: Room database for persistent storage
-- **Advanced Diagnostics**: Ping, traceroute, DNS lookup, WHOIS
-- **Network Security Analysis**: Vulnerability detection and reporting
-- **Custom Scan Profiles**: Save and reuse scanning configurations
+- **File Manager**: Browse and transfer files between the device and the computer
+- **Screen Recording**: Capture device screen recordings
+- **Performance Monitoring**: CPU, memory, and battery usage tracking
+- **Batch Operations**: Execute multiple commands across multiple devices
+- **Custom Scripts**: Save and execute custom ADB command sequences
+- **Export Functionality**: Export logs and device information
 
 ### Technical Improvements
-- **Unit Testing**: Comprehensive test coverage
-- **Integration Testing**: End-to-end testing scenarios
-- **Performance Optimization**: Memory and battery usage optimization
-- **Error Handling**: Robust error states and recovery
-- **Accessibility**: Enhanced accessibility features
+- **Room Database**: Persistent storage for device history and logs
+- **Background Services**: Long-running operations with notifications
+- **Advanced Error Handling**: Retry mechanisms and offline support
+- **Performance Optimization**: Memory management and battery efficiency
+- **Accessibility**: Enhanced accessibility features and screen reader support
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Commit changes**: `git commit -m 'Add amazing feature'`
+4. **Push to branch**: `git push origin feature/amazing-feature`
+5. **Open a Pull Request**
+
+### Development Guidelines
+- Follow Kotlin coding conventions
+- Use Jetpack Compose best practices
+- Maintain MVVM architecture patterns
+- Add unit tests for new features
+- Update documentation for API changes
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ## 📞 Support
 
-For support, please open an issue on the GitHub repository.
+For support and questions:
+- **Issues**: Open an issue on GitHub
+- **Discussions**: Use GitHub Discussions for general questions
+- **Documentation**: Check the docs/ folder for detailed guides
 
----
+## 🙏 Acknowledgments
 
-**NetScope v1.0** - Built with ❤️ using Jetpack Compose and Material 3
+- **Android Team**: For Jetpack Compose and Material 3
+- **Google**: For ADB and Android development tools
+- **Community**: For open-source libraries and contributions
